@@ -5,16 +5,98 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+var articles={
+    articleOne: {
+        title: "Article One | Shashank Prakash",
+        heading: "Article One",
+        date: "Aug 27, 2017",
+        content: `
+          <p>
+          Hi there !! Article One has a proper HTML page assigned to it now.
+          </p>
+          <p>
+          Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here.
+          </p>
+          <p>
+          Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here. Content goes here.
+          </p>
+        `
+    },
+    articleTwo: {
+        title: "Article Two | Shashank Prakash",
+        heading: "Article Two",
+        date: "Aug 28, 2017",
+        content: `
+          <p>
+          Hi there !! Article Two has a proper HTML page assigned to it now.
+          </p>
+        `
+    },
+    articleThree: {
+        title: "Article Three | Shashank Prakash",
+        heading: "Article Three",
+        date: "Aug 28, 2017",
+        content: `
+          <p>
+          Hi there !! Article Two has a proper HTML page assigned to it now.
+          </p>
+    `
+    }
+    
+};
+
+function createTemplate(data){
+    var title=data.title;
+    var date=data.date;
+    var heading=data.heading;
+    var content=data.content;
+    
+    var htmlTemplate=`
+        <HTML>
+        
+          <HEAD>
+            <title>${title}</title>
+            <meta name="viewport" content="width-device-width, initial-scale=1" />
+           <link href="ui/style.css" rel="stylesheet"/>
+          </HEAD>
+          
+          <BODY>
+            <div class="container">
+                <div>
+                  <a href="/">Home</a>
+                </div>
+            
+                <hr/>
+            
+                <h3>${heading}</h3>
+            
+                <div>
+                  ${date}
+                </div>
+            
+                <div>
+                  ${content}
+                </div>
+            </div>
+          </BODY>
+        
+        </HTML>
+    `;
+    return htmlTemplate;
+}
+
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 app.get('/article-one', function(req,res) {
-   res.sendFile(path.join(__dirname, 'ui', 'article-one.html'));
+   res.send(createTemplate(articleOne));
 });
+
 app.get('/article-two', function(req,res) {
    res.sendFile(path.join(__dirname, 'ui', 'article-two.html'));
 });
+
 app.get('/article-three', function(req,res) {
    res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));
 });
